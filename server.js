@@ -57,7 +57,7 @@ const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-
+  console.log(username, email, password);
   if (!username || !email || !password) {
     return res.status(400).json({ message: "All fields are required!" });
   }
@@ -154,7 +154,7 @@ app.post("/notes", async (req, res) => {
     res.status(500).json({ message: "Server error! Please try again." });
   }
 });
-app.put("/notes/", async (req, res) => {
+app.put("/notes", async (req, res) => {
   const { id, content, title, category } = req.body;
 
   try {
@@ -180,7 +180,6 @@ app.get("/notes", async (req, res) => {
         return res.status(500).json({ error: "Server error" });
       }
       res.status(200).json({ rows });
-      console.log(rows);
     });
   } catch (error) {
     res.status(500).json({ message: "Server error! Please try again." });
@@ -194,7 +193,6 @@ app.delete("/notes/:id", async (req, res) => {
         return res.status(500).json({ error: "Server error" });
       }
       res.status(200).json({ message: "row deleted" });
-      console.log(rows);
     });
   } catch (error) {
     res.status(500).json({ message: "Server error! Please try again." });
